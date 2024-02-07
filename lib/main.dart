@@ -5,7 +5,7 @@ void main() {
 }
 
 class QuizApp extends StatelessWidget {
-  const QuizApp({super.key});
+  const QuizApp({Key? key}) : super(key: key);
 
   @override
   Widget build(BuildContext context) {
@@ -20,7 +20,7 @@ class QuizApp extends StatelessWidget {
 }
 
 class QuizScreen extends StatefulWidget {
-  const QuizScreen({super.key});
+  const QuizScreen({Key? key}) : super(key: key);
 
   @override
   _QuizScreenState createState() => _QuizScreenState();
@@ -116,8 +116,6 @@ class _QuizScreenState extends State<QuizScreen> {
     Question(
         "У меня бывают периоды, когда меня сильно раздражают яркий свет, яркие краски, сильный шум, хотя на других людей это так не действует"),
     Question("У меня есть плохие привычки"),
-
-    // Add more questions here
   ];
 
   int counter1 = 0;
@@ -125,6 +123,134 @@ class _QuizScreenState extends State<QuizScreen> {
   int counter3 = 0;
   int counter4 = 0;
   final Map<int, String> _selectedAnswers = {};
+  int currentIndex = 0;
+
+  void _answerQuestion(String? value) {
+    setState(() {
+      _selectedAnswers[currentIndex] = value!;
+      if (currentIndex == 3 ||
+          currentIndex == 12 ||
+          currentIndex == 19 ||
+          currentIndex == 28 ||
+          currentIndex == 30 ||
+          currentIndex == 32 ||
+          currentIndex == 46 ||
+          currentIndex == 56 ||
+          currentIndex == 66 ||
+          currentIndex == 73) {
+        if (value == 'Yes') {
+          counter1++;
+        }
+      } else if (currentIndex == 1 ||
+          currentIndex == 5 ||
+          currentIndex == 11 ||
+          currentIndex == 13 ||
+          currentIndex == 18 ||
+          currentIndex == 20 ||
+          currentIndex == 26 ||
+          currentIndex == 27 ||
+          currentIndex == 31 ||
+          currentIndex == 35 ||
+          currentIndex == 38 ||
+          currentIndex == 40 ||
+          currentIndex == 44 ||
+          currentIndex == 48 ||
+          currentIndex == 51 ||
+          currentIndex == 54 ||
+          currentIndex == 58 ||
+          currentIndex == 62 ||
+          currentIndex == 64 ||
+          currentIndex == 68 ||
+          currentIndex == 71) {
+        if (value == 'Yes') {
+          counter2++;
+        }
+      } else if (currentIndex == 2 ||
+          currentIndex == 7 ||
+          currentIndex == 9 ||
+          currentIndex == 15 ||
+          currentIndex == 17 ||
+          currentIndex == 22 ||
+          currentIndex == 24 ||
+          currentIndex == 29 ||
+          currentIndex == 33 ||
+          currentIndex == 37 ||
+          currentIndex == 41 ||
+          currentIndex == 43 ||
+          currentIndex == 45 ||
+          currentIndex == 49 ||
+          currentIndex == 52 ||
+          currentIndex == 55 ||
+          currentIndex == 60 ||
+          currentIndex == 63 ||
+          currentIndex == 67 ||
+          currentIndex == 70 ||
+          currentIndex == 72) {
+        if (value == 'Yes') {
+          counter3++;
+        }
+      } else if (currentIndex == 4 ||
+          currentIndex == 6 ||
+          currentIndex == 8 ||
+          currentIndex == 10 ||
+          currentIndex == 14 ||
+          currentIndex == 16 ||
+          currentIndex == 21 ||
+          currentIndex == 23 ||
+          currentIndex == 25 ||
+          currentIndex == 34 ||
+          currentIndex == 36 ||
+          currentIndex == 39 ||
+          currentIndex == 42 ||
+          currentIndex == 47 ||
+          currentIndex == 50 ||
+          currentIndex == 53 ||
+          currentIndex == 57 ||
+          currentIndex == 59 ||
+          currentIndex == 61 ||
+          currentIndex == 65 ||
+          currentIndex == 69) {
+        if (value == 'Yes') {
+          counter4++;
+        }
+      }
+    });
+  }
+
+  void _nextQuestion() {
+    setState(() {
+      currentIndex++;
+    });
+  }
+
+  void _submitTest() {
+    showDialog(
+      context: context,
+      builder: (context) {
+        return AlertDialog(
+          title: const Text('Answer Counts'),
+          content: Column(
+            mainAxisSize: MainAxisSize.min,
+            crossAxisAlignment: CrossAxisAlignment.start,
+            children: [
+              Text('шкала искренности: $counter1'),
+              Text('шкала депрессивности: $counter2'),
+              Text('шкала невротизации: $counter3'),
+              Text('шкала общительности: $counter4'),
+            ],
+          ),
+          actions: [
+            TextButton(
+              onPressed: () {
+                Navigator.pop(context);
+              },
+              child: const Text('OK'),
+            ),
+          ],
+        );
+      },
+    );
+  }
 
   @override
   Widget build(BuildContext context) {
@@ -132,157 +258,69 @@ class _QuizScreenState extends State<QuizScreen> {
       appBar: AppBar(
         title: const Text('Psychology Test'),
       ),
-      body: ListView.builder(
-        itemCount: _questions.length,
-        itemBuilder: (context, index) {
-          return ListTile(
-            title: Text(_questions[index].questionText),
-            subtitle: Column(
-              crossAxisAlignment: CrossAxisAlignment.start,
-              children: [
-                RadioListTile<String>(
-                  title: const Text('Да'),
-                  value: 'Yes',
-                  groupValue: _selectedAnswers[index],
-                  onChanged: (value) {
-                    setState(() {
-                      _selectedAnswers[index] = value!;
-                      if (index == 4 ||
-                          index == 13 ||
-                          index == 20 ||
-                          index == 29 ||
-                          index == 31 ||
-                          index == 33 ||
-                          index == 47 ||
-                          index == 57 ||
-                          index == 67 ||
-                          index == 74) {
-                        if (value == 'Yes') {
-                          counter1++;
-                        }
-                      } else if (index == 2 ||
-                          index == 6 ||
-                          index == 12 ||
-                          index == 14 ||
-                          index == 19 ||
-                          index == 21 ||
-                          index == 27 ||
-                          index == 28 ||
-                          index == 32 ||
-                          index == 36 ||
-                          index == 39 ||
-                          index == 41 ||
-                          index == 45 ||
-                          index == 49 ||
-                          index == 52 ||
-                          index == 55 ||
-                          index == 59 ||
-                          index == 63 ||
-                          index == 65 ||
-                          index == 69 ||
-                          index == 72) {
-                        if (value == 'Yes') {
-                          counter2++;
-                        }
-                      } else if (index == 2 ||
-                          index == 3 ||
-                          index == 8 ||
-                          index == 10 ||
-                          index == 16 ||
-                          index == 18 ||
-                          index == 23 ||
-                          index == 25 ||
-                          index == 30 ||
-                          index == 34 ||
-                          index == 38 ||
-                          index == 42 ||
-                          index == 44 ||
-                          index == 46 ||
-                          index == 50 ||
-                          index == 53 ||
-                          index == 56 ||
-                          index == 61 ||
-                          index == 64 ||
-                          index == 68 ||
-                          index == 71 ||
-                          index == 73) {
-                        if (value == 'Yes') {
-                          counter3++;
-                        } //5, 7, 9, 11, 15, 17, 22, 24,  26, 35, 37, 40, 43, 48, 51, 54, 58, 60, 62, 66, 70.
-                      } else if (index == 5 ||
-                          index == 7 ||
-                          index == 9 ||
-                          index == 11 ||
-                          index == 15 ||
-                          index == 17 ||
-                          index == 22 ||
-                          index == 24 ||
-                          index == 26 ||
-                          index == 35 ||
-                          index == 37 ||
-                          index == 40 ||
-                          index == 43 ||
-                          index == 48 ||
-                          index == 51 ||
-                          index == 54 ||
-                          index == 58 ||
-                          index == 60 ||
-                          index == 62 ||
-                          index == 66 ||
-                          index == 70) {
-                        if (value == 'Yes') {
-                          counter4++;
-                        }
-                      }
-                    });
-                  },
-                ),
-                RadioListTile<String>(
-                  title: const Text('Нет'),
-                  value: 'No',
-                  groupValue: _selectedAnswers[index],
-                  onChanged: (value) {
-                    setState(() {
-                      _selectedAnswers[index] = value!;
-                    });
-                  },
-                ),
-              ],
-            ),
-          );
-        },
-      ),
-      floatingActionButton: FloatingActionButton(
-        onPressed: () {
-          // Show answer counts
-          showDialog(
-            context: context,
-            builder: (context) {
-              return AlertDialog(
-                title: const Text('Answer Counts'),
-                content: Column(
-                  mainAxisSize: MainAxisSize.min,
-                  crossAxisAlignment: CrossAxisAlignment.start,
-                  children: [
-                    Text('шкала искренности: $counter1'),
-                    Text('шкала депрессивности: $counter2'),
-                    Text('шкала невротизации: $counter3'),
-                    Text('шкала общительности: $counter4'),
-                  ],
-                ),
-                actions: [
-                  TextButton(
-                    onPressed: () {
-                      Navigator.pop(context);
-                    },
-                    child: const Text('OK'),
+      body: Column(
+        children: [
+          Expanded(
+            child: ListView.builder(
+              itemCount: _questions.length,
+              itemBuilder: (context, index) {
+                return Visibility(
+                  visible: currentIndex == index,
+                  child: ListTile(
+                    title: Text(_questions[index].questionText),
+                    subtitle: Column(
+                      crossAxisAlignment: CrossAxisAlignment.start,
+                      children: [
+                        RadioListTile<String>(
+                          title: const Text('Да'),
+                          value: 'Yes',
+                          groupValue: _selectedAnswers[index],
+                          onChanged: _answerQuestion,
+                        ),
+                        RadioListTile<String>(
+                          title: const Text('Нет'),
+                          value: 'No',
+                          groupValue: _selectedAnswers[index],
+                          onChanged: _answerQuestion,
+                        ),
+                      ],
+                    ),
                   ),
-                ],
-              );
-            },
-          );
-        },
-        child: const Icon(Icons.check),
+                );
+              },
+            ),
+          ),
+          if (currentIndex != _questions.length - 1)
+            ElevatedButton(
+              onPressed: () {
+                if (_selectedAnswers[currentIndex] != null) {
+                  _nextQuestion();
+                } else {
+                  ScaffoldMessenger.of(context).showSnackBar(
+                    const SnackBar(
+                      content: Text('Выберите один вариант'),
+                    ),
+                  );
+                }
+              },
+              child: const Text('Следующий'),
+            )
+          else
+            ElevatedButton(
+              onPressed: () {
+                if (_selectedAnswers[currentIndex] != null) {
+                  _submitTest();
+                } else {
+                  ScaffoldMessenger.of(context).showSnackBar(
+                    const SnackBar(
+                      content: Text('Выберите один вариант'),
+                    ),
+                  );
+                }
+              },
+              child: const Text('Закончить тест'),
+            ),
+        ],
       ),
     );
   }
