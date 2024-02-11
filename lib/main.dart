@@ -1,9 +1,5 @@
 import 'package:flutter/material.dart';
 
-void main() {
-  runApp(const QuizApp());
-}
-
 class QuizApp extends StatelessWidget {
   const QuizApp({Key? key}) : super(key: key);
 
@@ -293,7 +289,7 @@ class _QuizScreenState extends State<QuizScreen> {
                       children: [
                         Text(
                           '${_questions[index].number}. ${_questions[index].questionText}',
-                          style: TextStyle(
+                          style: const TextStyle(
                             fontWeight: FontWeight.bold,
                           ),
                         ),
