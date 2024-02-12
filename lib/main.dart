@@ -1,19 +1,5 @@
 import 'package:flutter/material.dart';
-
-class QuizApp extends StatelessWidget {
-  const QuizApp({Key? key}) : super(key: key);
-
-  @override
-  Widget build(BuildContext context) {
-    return MaterialApp(
-      title: 'PsychoApp',
-      theme: ThemeData(
-        primarySwatch: Colors.blue,
-      ),
-      home: const QuizScreen(),
-    );
-  }
-}
+import 'package:psycho/test_result.dart';
 
 class QuizScreen extends StatefulWidget {
   const QuizScreen({Key? key}) : super(key: key);
@@ -130,7 +116,6 @@ class _QuizScreenState extends State<QuizScreen> {
   final Map<int, String> _selectedAnswers = {};
   int currentIndex = 0;
   bool testSubmitted = false;
-
   void _answerQuestion(String? value) {
     if (!testSubmitted) {
       setState(() {
@@ -232,40 +217,25 @@ class _QuizScreenState extends State<QuizScreen> {
         currentIndex++;
       });
     } else {
-      _submitTest();
+      _submitTest(context);
     }
   }
 
-  void _submitTest() {
+  void _submitTest(BuildContext context) {
     setState(() {
       testSubmitted = true;
     });
 
-    showDialog(
-      context: context,
-      builder: (context) {
-        return AlertDialog(
-          title: const Text('Answer Counts'),
-          content: Column(
-            mainAxisSize: MainAxisSize.min,
-            crossAxisAlignment: CrossAxisAlignment.start,
-            children: [
-              Text('шкала искренности: $counter1'),
-              Text('шкала депрессивности: $counter2'),
-              Text('шкала невротизации: $counter3'),
-              Text('шкала общительности: $counter4'),
-            ],
-          ),
-          actions: [
-            TextButton(
-              onPressed: () {
-                Navigator.pop(context);
-              },
-              child: const Text('OK'),
-            ),
-          ],
-        );
-      },
+    Navigator.push(
+      context,
+      MaterialPageRoute(
+        builder: (context) => TestResult(
+          counter1: counter1,
+          counter2: counter2,
+          counter3: counter3,
+          counter4: counter4,
+        ),
+      ),
     );
   }
 
