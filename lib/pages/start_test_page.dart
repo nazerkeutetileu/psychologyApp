@@ -1,33 +1,14 @@
 import 'package:flutter/material.dart';
-import 'package:psycho/main.dart';
+import 'package:psycho/routing/app_routes.dart';
 
-void main() {
-  runApp(const MyApp());
-}
-
-class MyApp extends StatelessWidget {
-  const MyApp({Key? key}) : super(key: key);
+class StartTestPage extends StatefulWidget {
+  const StartTestPage({Key? key}) : super(key: key);
 
   @override
-  Widget build(BuildContext context) {
-    return MaterialApp(
-      title: 'PsychoApp',
-      theme: ThemeData(
-        primarySwatch: Colors.blue,
-      ),
-      home: const NameInputPage(),
-    );
-  }
+  _StartTestPageState createState() => _StartTestPageState();
 }
 
-class NameInputPage extends StatefulWidget {
-  const NameInputPage({Key? key}) : super(key: key);
-
-  @override
-  _NameInputPageState createState() => _NameInputPageState();
-}
-
-class _NameInputPageState extends State<NameInputPage> {
+class _StartTestPageState extends State<StartTestPage> {
   final TextEditingController _nameController = TextEditingController();
   bool _isReady = false;
 
@@ -44,14 +25,15 @@ class _NameInputPageState extends State<NameInputPage> {
           children: [
             TextField(
               controller: _nameController,
+              onChanged: (value) {
+                setState(() {
+                  _isReady =
+                      value.isNotEmpty; // Enable button if there's text input
+                });
+              },
               decoration: const InputDecoration(
                 labelText: 'Ваше имя',
               ),
-              onChanged: (value) {
-                setState(() {
-                  _isReady = value.isNotEmpty;
-                });
-              },
             ),
             const SizedBox(height: 20),
             ElevatedButton(
@@ -101,13 +83,8 @@ class _NameInputPageState extends State<NameInputPage> {
                               ElevatedButton(
                                 onPressed: () {
                                   if (_isChecked) {
-                                    Navigator.push(
-                                      context,
-                                      MaterialPageRoute(
-                                        builder: (context) =>
-                                            const QuizScreen(),
-                                      ),
-                                    );
+                                    Navigator.pushNamed(
+                                        context, AppRoutes.quizPage);
                                   }
                                 },
                                 child: const Text('Дальше'),
