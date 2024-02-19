@@ -1,12 +1,12 @@
 import 'package:flutter/material.dart';
 
-class TestResult extends StatelessWidget {
+class TestResultPage extends StatelessWidget {
   final int counter1;
   final int counter2;
   final int counter3;
   final int counter4;
 
-  const TestResult({
+  const TestResultPage({
     super.key,
     required this.counter1,
     required this.counter2,
