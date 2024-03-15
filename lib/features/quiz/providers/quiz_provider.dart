@@ -6,7 +6,7 @@ import 'package:psycho/routing/app_routes.dart';
 class QuizProvider extends ChangeNotifier {
   BuildContext context;
 
-  QuizProvider(this.context);
+  QuizProvider(this.context, {required String value});
   int counter1 = 0;
   int counter2 = 0;
   int counter3 = 0;
