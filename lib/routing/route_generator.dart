@@ -1,7 +1,10 @@
 import 'package:flutter/material.dart';
+import 'package:provider/provider.dart';
 import 'package:psycho/pages/quiz_page.dart';
 import 'package:psycho/pages/start_test_page.dart';
 import 'package:psycho/pages/test_result_page.dart';
+import 'package:psycho/providers/quiz_provider.dart';
+import 'package:psycho/providers/test_initiation_provider.dart';
 import 'package:psycho/routing/app_routes.dart';
 
 class RouteGenerator {
@@ -13,9 +16,19 @@ class RouteGenerator {
       case AppRoutes.home:
         return MaterialPageRoute(builder: (context) => MaterialApp());
       case AppRoutes.quizPage:
-        return MaterialPageRoute(builder: (_) => const QuizPage());
+        return MaterialPageRoute(
+          builder: (context) => ChangeNotifierProvider(
+              create: (context) => QuizProvider(context), child: QuizPage()),
+        );
+
       case AppRoutes.startTestPage:
-        return MaterialPageRoute(builder: (_) => StartTestPage());
+        return MaterialPageRoute(
+          builder: (context) => ChangeNotifierProvider(
+            create: (context) => TestInitiationProvider(),
+            child: StartTestPage(),
+          ),
+        );
+
       case AppRoutes.testResultPage:
         // If args is not of the correct type, return an error page.
         if (args is! TestResultPage) {
